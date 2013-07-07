@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 20000802//EN" "http://www.w3.org/TR/2000/CR-SVG-20000802/DTD/svg-20000802.dtd">
+<svg width="465" height="430"  xmlns="http://www.w3.org/2000/svg">
+
+	<title>Triceps Brachii</title>
+
+	<image id="muscle" x="-300" y="-190" width="1075" height="1025" xlink:href="malemuscle270.jpg" />
+	<image id="skin" x="-300" y="-190" width="1075" height="1025" xlink:href="maleskin270.jpg" />
+
+</svg>
