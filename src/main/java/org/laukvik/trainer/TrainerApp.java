@@ -8,10 +8,8 @@ import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.FileInputStream;
 import java.util.Locale;
-
 import javax.swing.JFrame;
 import javax.swing.UIManager;
-
 import org.laukvik.swing.locale.LocaleListener;
 import org.laukvik.swing.platform.CrossPlatformUtilities;
 import org.laukvik.swing.platform.osx.OSXAdapter;
@@ -22,326 +20,297 @@ import org.laukvik.trainer.journal.JournalManager;
 import org.laukvik.trainer.journal.JournalPanel;
 import org.laukvik.trainer.swing.JournalHelper;
 import org.laukvik.trainer.swing.JournalProgressDialog;
- 
-/** 
+
+/**
  * Bugs CRITICAL
- * 
- * TODO - ExerciseDetailsPanel2 fŒr feil st¿rrelse nŒr man Œpner 
- * TODO - Kan ikke slette exercisePhoto
- * TODO - FŒ med markerte omrŒder av muskel
- * TODO - Lage muskel/skin bilder av mann
- * 
- * 
+ *
+ * TODO - ExerciseDetailsPanel2 fï¿½r feil stï¿½rrelse nï¿½r man ï¿½pner TODO - Kan ikke
+ * slette exercisePhoto TODO - Fï¿½ med markerte omrï¿½der av muskel TODO - Lage
+ * muskel/skin bilder av mann
+ *
+ *
  * BUGS
- * 
- * TODO - Det stŒr "Unknown" i pulldown for ¿velse
- * TODO - Tooltip blir stŒende igjen i droppable icon
- * TODO - NŒr man endrer sprŒk blir workoutTable deselected og setsTable ogsŒ
- * TODO - Skulder mŒ deles inn i front, midtre og bak
- * 
+ *
+ * TODO - Det stï¿½r "Unknown" i pulldown for ï¿½velse TODO - Tooltip blir stï¿½ende
+ * igjen i droppable icon TODO - Nï¿½r man endrer sprï¿½k blir workoutTable
+ * deselected og setsTable ogsï¿½ TODO - Skulder mï¿½ deles inn i front, midtre og
+ * bak
+ *
  * Features
- * 
- * TOOD - nŒr man Œpner bilder i exercise sŒ mŒ det Œpnes en browser og ikke en previewer
- * TODO - ExercisePhoto burde ha cheesy speilbilde for Œ se stili ut
- * TODO - Bilder mŒ importeres til Bibliotek/Trainer som JPG
- * TODO - ¯velser mŒ kunne bli tagges som maskin og som sammensatt/isolasjons¿velse
- * TODO - Mulighet for Œ gi terningkast for ¿velser i online delen
- * TODO - FŒ med TabbedPane pŒ shoppen for Œ vise 1). nyheter 2). mest popul¾r og 3++ kroppsdelene
- * TODO - Hver ¿velse mŒ ha forfatter navn og copyright pŒ foto og link til forfatters hjemmeside
- * TODO - ¯velser som downloades mŒ bli read-only i ExerciseEditor
- * TODO - NŒr man Œpner shoppen sŒ mŒ ¿velsene vise at man kan oppdatere til siste versjon
- * TODO - Grafen mŒ hoppe automatisk til siste registrerte ¿velse
- * TODO - Med checkbox for cheats i set
- * TODO - Grafene mŒ ha punkter over linja
- * TODO - BodyStatus mŒ ha gradient farge slik at r¿d blir intenst og gr¿nt blir ikke intenst
- * TODO - MŒ ha "loading..." pŒ SVGpanel
- * TODO - Klikke pŒ graf mŒ f¿re til angitt workout
- * TODO - Vise Œrskalender med oversikt over alle treninger for et helt Œr
- * TODO - Mulighet for Œ flytte sets opp og ned 
- * TODO - Lage s¿k i ExerciseEditorPanel?
- * TOOD - Lage st¿tte for uendelig mange bilder i exerciseEditorPanel
- * TODO - Lage historikk for 1rep max med graf som viser %sats ift 1r max?
- * TODO - Lage backup/restore
- * 
+ *
+ * TOOD - nï¿½r man ï¿½pner bilder i exercise sï¿½ mï¿½ det ï¿½pnes en browser og ikke en
+ * previewer TODO - ExercisePhoto burde ha cheesy speilbilde for ï¿½ se stili ut
+ * TODO - Bilder mï¿½ importeres til Bibliotek/Trainer som JPG TODO - ï¿½velser mï¿½
+ * kunne bli tagges som maskin og som sammensatt/isolasjonsï¿½velse TODO -
+ * Mulighet for ï¿½ gi terningkast for ï¿½velser i online delen TODO - Fï¿½ med
+ * TabbedPane pï¿½ shoppen for ï¿½ vise 1). nyheter 2). mest populï¿½r og 3++
+ * kroppsdelene TODO - Hver ï¿½velse mï¿½ ha forfatter navn og copyright pï¿½ foto og
+ * link til forfatters hjemmeside TODO - ï¿½velser som downloades mï¿½ bli read-only
+ * i ExerciseEditor TODO - Nï¿½r man ï¿½pner shoppen sï¿½ mï¿½ ï¿½velsene vise at man kan
+ * oppdatere til siste versjon TODO - Grafen mï¿½ hoppe automatisk til siste
+ * registrerte ï¿½velse TODO - Med checkbox for cheats i set TODO - Grafene mï¿½ ha
+ * punkter over linja TODO - BodyStatus mï¿½ ha gradient farge slik at rï¿½d blir
+ * intenst og grï¿½nt blir ikke intenst TODO - Mï¿½ ha "loading..." pï¿½ SVGpanel TODO
+ * - Klikke pï¿½ graf mï¿½ fï¿½re til angitt workout TODO - Vise ï¿½rskalender med
+ * oversikt over alle treninger for et helt ï¿½r TODO - Mulighet for ï¿½ flytte sets
+ * opp og ned TODO - Lage sï¿½k i ExerciseEditorPanel? TOOD - Lage stï¿½tte for
+ * uendelig mange bilder i exerciseEditorPanel TODO - Lage historikk for 1rep
+ * max med graf som viser %sats ift 1r max? TODO - Lage backup/restore
+ *
  * Forslag
- * 
- * TODO - Legge til stjerner for hvert sett for Œ indikere hvor bra man f¿lte seg
- * TODO - Legge til Œrstidsbilder i graf
- * TODO - Lage treningsprogram
- * 
- * 10.jan - ¯velsespulldown stŒr det bare "Ytre" og ikke "Ytre mage"
- * 10.jan - Language Combo klarer ikke Œ sette "ingen"
- * 10.jan - Language Combo er ikke alfabetisk
- * 10.jan - Kan ikke gŒ an Œ sette ekstra muskler nŒr den er hovedmuskel i exercise
- * 10.jan - Vanlig icon vises ikke lenger
- * 10.jan - YouTube knapp og WWW knapp mŒ bli disabled nŒr det ikke er en URL
- * 2.jan - ¯velse mŒ fŒ sprŒk alternativ 
- * 2.jan - ¯velse mŒ fŒ link til youtube
- * 1.jan - FŒ med heart beat pŒ aerobic exercises
- * 31.des - NŒr man viser at en ny versjon er tilgjengelig sŒ mŒ en html side med features vises
- * 31.des - FŒ med velkomstmelding med [ x ] Dont show this again som viser features og introduksjon
- * 30.des - Username i OS blir default navn
- * 30.des - Legge til kommentarer for set
- * 29.des - Mulighet for Œ laste ned Exercises
- * 29.des - Drag n drop mŒ huske orginal path til bildene slik at man kan etterhŒndtere de
- * 27.des - Kalender i properties stŒr pŒ engelsk
- * 31.juli - FŒ med aerobic symboler i kalenderen
- * 18.mai - NŒr man legger til bilde sŒ synes de ikke i combobox f¿r man har restartet
- * 14.mai - Pulldown i SetsTable viser disabled ¿velser
- * 14.mai - Det mangler flagg i sprŒkpulldown
- * 14.mai - Vises ingen bilder i SVGene
- * 14.mai - NŒr man lager ny workout sŒ kan den ikke slettes med en gang
- * 14.mai - NŒr man fŒr sp¿rsmŒl om Œ slette exercise sŒ mŒ man liste opp alle workouts som bruker exercisen
- * 12.mai - Check update mangler ikon
- * 12.mai - vindustittel stŒr pŒ engelsk
- * 12.mai - Rediger menyen mŒ bli grŒet ut nŒr det ikke er valg
- * 12.mai - Det stŒr "Muskel: Shoulder" i pulldown
- * 12.mai - Fjerne Check update i meny
- * 12.mai - Meny er pŒ engelsk
- * 12.april - Programmer mŒ velge sprŒk basert pŒ OS innstillinger
- * 12.april - Statusdialogen er ikke grŒ helt nederst
- * 12.april - Status graf er ikke riktig
- * 12.april - DatePicker st¿tter ikke sprŒk
- * 12.april - YearSpinner kan skrive inn tekst
- * 11.april - Exercises mŒ bli default enabled nŒr de blir opprettet
- * 11.apil - Pulldown i SetsTable st¿tter ikke sprŒk
- * 11.april - SetsTable endrer ikke sprŒk
- * 7.april - Lage sprŒkvalg
- * 5.april - Pulldown i SetsTable mŒ vise alfabetisk listen over ¿velser
- * 5.april - Combobox viser feil st¿rrelse ved lukking
- * 5.april - ComboBox i sets mŒ kun kunne opp ved dobbelt klikk
- * 3.april - ¯velser blir ikke selectet i treet nŒr man legger til ¿velse
- * 3.april - Alle komponentene i exerciseeditorpanel mŒ v¾re resizable
- * 3.april - H¿yre juster slider for muskel/skin
- * 2.april - Notatfeltet skal fylle helt ned til bunn av programmet
- * 2.april - Kalender har feil st¿rrelse
- * 2.april - Graf oppdaterer seg ikke nŒr kalender dato gŒr utover nytt Œr
- * 2.april - St¿tte for kj¿nn i ¿velser og status dialoger
- * 2.april - Fjerne vekt fra innstillinger
- * 1.april - Fjerne vekt fra innstillinger
- * 1.april - MŒnedskalender mister fokus pŒ dag nŒr mŒned endres
- * 31.mars -  trykke nei pŒ bekreft sletting av ¿velse f¿rte til deselektering av ¿velse
- * 31.mars - La til relevante ikoner pŒ bekreft vinduder
- * 31.mars - La til vindu tittel pŒ exerciseditor og innstillinger
- * 31.mars - Fjernet set icon
- * 31.mars - La til tykkere Œrslinje med semitransparent og ikke sort
- * 31.mars - TabbedPane mŒ bli n¿yaktig like stor som SVG grafen
- * 31.mars - Trenings¿kt tabellen mister selection nŒr en exercise endres
- * 31.mars - Rettet bug med enabling 
- * 30.mars - Enabling/disabling av exercise mŒ oppdateres umiddelbart
- * 30.mars - Legge til bekreft slett dialog
- * 30.mars - NŒr man legger til ny trenings¿kt sŒ blir ikke den valgt
- * 30.mars - Mouse over i graf er pŒ engelsk. Tekst i mouseover er ikke riktig posisjonert
- * 30.mars - Tekst i exercise description wrapper pŒ ord
- * 29.mars - Application Menu handling has been disabled. St¿tte for Leopard.
- * 29.mars - La til baseline alignment i Text i SVG. Rettet TextAnchor bug.
- * 29.mars - La inn manglende scroll komponenter for at BodyStatusDialog skulle se bra ut
- * 29.mars - La inn dragdrop av bilder fra browser og paste til droppableicon. Pluss auto resize av bilder. La pŒ tykkere border.
- * 29.mars - Fikset feil muscleID pŒ ¿vre rygg
- * 28.mars - Lage av/pŒ knapp for ¿velse i ExerciseEditorPanel for Œ skjule ubrukte ¿velser 
- * 19.mars - MŒl mŒ ha med bakgrunnsbilde
- * 19.mars - Legge til st¿tte for Œ lage historikk av vekt
- * 18.mars - NŒr man sletter en ¿velse mŒ editoren fŒ tomme felter
- * 18.mars - Tree i ExerciseEditor oppdateres ikke riktig ved bla sletting av ¿velse
- * 18.mars - Tooltip for ¿velser er ikke satt
- * 18.mars - ¯velsesknapper mŒ bli uthevet nŒr man klikker pŒ de
- * 18.mars - Flytt details knapen helt til h¿yre
- * 18.mars - Mangler ikoner pŒ ¿velser
- * 17.mars - ¯velse editor husker ikke hvor den var
- * 17.mars - Legge til valg for kj¿nn
- * 17.mars - Tabbed pane fŒr ikke med seg nŒr man legger til en ¿velse
- * 17.mars - Exception nŒr en ¿velse er valgt i sets table og man sletter en ¿velse
- * 17.mars -  legge til exercise fŒr feil muscleID
- * 17.mars - Ved sletting av ¿velse sŒ mŒ man fŒ beskjed om hvor mange ¿velser som bruker denne
- * 17.mars - Blir exception nŒr en exercise endres
- * 17.mars - Mouseover i SVG grafen virker ikke
- * 17.mars - Ikonbilde for ¿velse blir lik for alle!
- * 17.mars - Legg inn hovedknapper for muskel og fjern multitabber
- * 17.mars - Fjerne lite muskelbilde og muskel notater
- * 17.mars - Skal grafene vises i SVG?
- * 17.mars - Graf viser kun ett Œr!
- * 9.mars - Legge inn sprŒktekster for tree leafs i exerciseeditorpanel
- * 9.mars - Lage ferdig alle female SVG bilder
- * 9.mars - Slider skal huske verdier fra forrige gang og oppdater bildet ogsŒ
- * 9.mars - Fjerne scrollbar fra muscle bildet
- * DONE - FŒ med antall ¿velser i muskel
- * DONE - Legge inn taber for muskelgrupper
- * DONE - Innstillinger mŒ fŒ med dato 
- * DONE - Innstillinger mŒ fŒ med OK og cancel 
- * DONE - Legge inn muskelgruppe pulldown
- * DONE - Legge inn st¿tte for muskelgrupper i ¿velser
- * DONE - ¯velser mŒ fŒ med OK og cancel 
- * DONE - Mangler oversettelse nŒr det er tom med exercises
- * DONE - Dato er ikke sprŒk
- * DONE - MŒnedsnavn i workout tabell er pŒ engelsk
+ *
+ * TODO - Legge til stjerner for hvert sett for ï¿½ indikere hvor bra man fï¿½lte
+ * seg TODO - Legge til ï¿½rstidsbilder i graf TODO - Lage treningsprogram
+ *
+ * 10.jan - ï¿½velsespulldown stï¿½r det bare "Ytre" og ikke "Ytre mage" 10.jan -
+ * Language Combo klarer ikke ï¿½ sette "ingen" 10.jan - Language Combo er ikke
+ * alfabetisk 10.jan - Kan ikke gï¿½ an ï¿½ sette ekstra muskler nï¿½r den er
+ * hovedmuskel i exercise 10.jan - Vanlig icon vises ikke lenger 10.jan -
+ * YouTube knapp og WWW knapp mï¿½ bli disabled nï¿½r det ikke er en URL 2.jan -
+ * ï¿½velse mï¿½ fï¿½ sprï¿½k alternativ 2.jan - ï¿½velse mï¿½ fï¿½ link til youtube 1.jan -
+ * Fï¿½ med heart beat pï¿½ aerobic exercises 31.des - Nï¿½r man viser at en ny
+ * versjon er tilgjengelig sï¿½ mï¿½ en html side med features vises 31.des - Fï¿½ med
+ * velkomstmelding med [ x ] Dont show this again som viser features og
+ * introduksjon 30.des - Username i OS blir default navn 30.des - Legge til
+ * kommentarer for set 29.des - Mulighet for ï¿½ laste ned Exercises 29.des - Drag
+ * n drop mï¿½ huske orginal path til bildene slik at man kan etterhï¿½ndtere de
+ * 27.des - Kalender i properties stï¿½r pï¿½ engelsk 31.juli - Fï¿½ med aerobic
+ * symboler i kalenderen 18.mai - Nï¿½r man legger til bilde sï¿½ synes de ikke i
+ * combobox fï¿½r man har restartet 14.mai - Pulldown i SetsTable viser disabled
+ * ï¿½velser 14.mai - Det mangler flagg i sprï¿½kpulldown 14.mai - Vises ingen
+ * bilder i SVGene 14.mai - Nï¿½r man lager ny workout sï¿½ kan den ikke slettes med
+ * en gang 14.mai - Nï¿½r man fï¿½r spï¿½rsmï¿½l om ï¿½ slette exercise sï¿½ mï¿½ man liste
+ * opp alle workouts som bruker exercisen 12.mai - Check update mangler ikon
+ * 12.mai - vindustittel stï¿½r pï¿½ engelsk 12.mai - Rediger menyen mï¿½ bli grï¿½et ut
+ * nï¿½r det ikke er valg 12.mai - Det stï¿½r "Muskel: Shoulder" i pulldown 12.mai -
+ * Fjerne Check update i meny 12.mai - Meny er pï¿½ engelsk 12.april - Programmer
+ * mï¿½ velge sprï¿½k basert pï¿½ OS innstillinger 12.april - Statusdialogen er ikke
+ * grï¿½ helt nederst 12.april - Status graf er ikke riktig 12.april - DatePicker
+ * stï¿½tter ikke sprï¿½k 12.april - YearSpinner kan skrive inn tekst 11.april -
+ * Exercises mï¿½ bli default enabled nï¿½r de blir opprettet 11.apil - Pulldown i
+ * SetsTable stï¿½tter ikke sprï¿½k 11.april - SetsTable endrer ikke sprï¿½k 7.april -
+ * Lage sprï¿½kvalg 5.april - Pulldown i SetsTable mï¿½ vise alfabetisk listen over
+ * ï¿½velser 5.april - Combobox viser feil stï¿½rrelse ved lukking 5.april -
+ * ComboBox i sets mï¿½ kun kunne opp ved dobbelt klikk 3.april - ï¿½velser blir
+ * ikke selectet i treet nï¿½r man legger til ï¿½velse 3.april - Alle komponentene i
+ * exerciseeditorpanel mï¿½ vï¿½re resizable 3.april - Hï¿½yre juster slider for
+ * muskel/skin 2.april - Notatfeltet skal fylle helt ned til bunn av programmet
+ * 2.april - Kalender har feil stï¿½rrelse 2.april - Graf oppdaterer seg ikke nï¿½r
+ * kalender dato gï¿½r utover nytt ï¿½r 2.april - Stï¿½tte for kjï¿½nn i ï¿½velser og
+ * status dialoger 2.april - Fjerne vekt fra innstillinger 1.april - Fjerne vekt
+ * fra innstillinger 1.april - Mï¿½nedskalender mister fokus pï¿½ dag nï¿½r mï¿½ned
+ * endres 31.mars - ï¿½ trykke nei pï¿½ bekreft sletting av ï¿½velse fï¿½rte til
+ * deselektering av ï¿½velse 31.mars - La til relevante ikoner pï¿½ bekreft vinduder
+ * 31.mars - La til vindu tittel pï¿½ exerciseditor og innstillinger 31.mars -
+ * Fjernet set icon 31.mars - La til tykkere ï¿½rslinje med semitransparent og
+ * ikke sort 31.mars - TabbedPane mï¿½ bli nï¿½yaktig like stor som SVG grafen
+ * 31.mars - Treningsï¿½kt tabellen mister selection nï¿½r en exercise endres
+ * 31.mars - Rettet bug med enabling 30.mars - Enabling/disabling av exercise mï¿½
+ * oppdateres umiddelbart 30.mars - Legge til bekreft slett dialog 30.mars - Nï¿½r
+ * man legger til ny treningsï¿½kt sï¿½ blir ikke den valgt 30.mars - Mouse over i
+ * graf er pï¿½ engelsk. Tekst i mouseover er ikke riktig posisjonert 30.mars -
+ * Tekst i exercise description wrapper pï¿½ ord 29.mars - Application Menu
+ * handling has been disabled. Stï¿½tte for Leopard. 29.mars - La til baseline
+ * alignment i Text i SVG. Rettet TextAnchor bug. 29.mars - La inn manglende
+ * scroll komponenter for at BodyStatusDialog skulle se bra ut 29.mars - La inn
+ * dragdrop av bilder fra browser og paste til droppableicon. Pluss auto resize
+ * av bilder. La pï¿½ tykkere border. 29.mars - Fikset feil muscleID pï¿½ ï¿½vre rygg
+ * 28.mars - Lage av/pï¿½ knapp for ï¿½velse i ExerciseEditorPanel for ï¿½ skjule
+ * ubrukte ï¿½velser 19.mars - Mï¿½l mï¿½ ha med bakgrunnsbilde 19.mars - Legge til
+ * stï¿½tte for ï¿½ lage historikk av vekt 18.mars - Nï¿½r man sletter en ï¿½velse mï¿½
+ * editoren fï¿½ tomme felter 18.mars - Tree i ExerciseEditor oppdateres ikke
+ * riktig ved bla sletting av ï¿½velse 18.mars - Tooltip for ï¿½velser er ikke satt
+ * 18.mars - ï¿½velsesknapper mï¿½ bli uthevet nï¿½r man klikker pï¿½ de 18.mars - Flytt
+ * details knapen helt til hï¿½yre 18.mars - Mangler ikoner pï¿½ ï¿½velser 17.mars -
+ * ï¿½velse editor husker ikke hvor den var 17.mars - Legge til valg for kjï¿½nn
+ * 17.mars - Tabbed pane fï¿½r ikke med seg nï¿½r man legger til en ï¿½velse 17.mars -
+ * Exception nï¿½r en ï¿½velse er valgt i sets table og man sletter en ï¿½velse
+ * 17.mars - ï¿½ legge til exercise fï¿½r feil muscleID 17.mars - Ved sletting av
+ * ï¿½velse sï¿½ mï¿½ man fï¿½ beskjed om hvor mange ï¿½velser som bruker denne 17.mars -
+ * Blir exception nï¿½r en exercise endres 17.mars - Mouseover i SVG grafen virker
+ * ikke 17.mars - Ikonbilde for ï¿½velse blir lik for alle! 17.mars - Legg inn
+ * hovedknapper for muskel og fjern multitabber 17.mars - Fjerne lite
+ * muskelbilde og muskel notater 17.mars - Skal grafene vises i SVG? 17.mars -
+ * Graf viser kun ett ï¿½r! 9.mars - Legge inn sprï¿½ktekster for tree leafs i
+ * exerciseeditorpanel 9.mars - Lage ferdig alle female SVG bilder 9.mars -
+ * Slider skal huske verdier fra forrige gang og oppdater bildet ogsï¿½ 9.mars -
+ * Fjerne scrollbar fra muscle bildet DONE - Fï¿½ med antall ï¿½velser i muskel DONE
+ * - Legge inn taber for muskelgrupper DONE - Innstillinger mï¿½ fï¿½ med dato DONE
+ * - Innstillinger mï¿½ fï¿½ med OK og cancel DONE - Legge inn muskelgruppe pulldown
+ * DONE - Legge inn stï¿½tte for muskelgrupper i ï¿½velser DONE - ï¿½velser mï¿½ fï¿½ med
+ * OK og cancel DONE - Mangler oversettelse nï¿½r det er tom med exercises DONE -
+ * Dato er ikke sprï¿½k DONE - Mï¿½nedsnavn i workout tabell er pï¿½ engelsk
+ *
  * @author morten
  *
  */
 public class TrainerApp extends JFrame implements OSXApplication, JournalListener, LocaleListener {
 
-	private static final long serialVersionUID = 1L;
-	private JournalPanel journalPanel;
+    private static final long serialVersionUID = 1L;
+    private JournalPanel journalPanel;
 
-	public TrainerApp(){
-		getRootPane().putClientProperty( "Window.style", "small" );
-		getRootPane().putClientProperty( "apple.awt.brushMetalLook", Boolean.TRUE );
-		setLocale( JournalHelper.getDefaultLocale() );
-		UIManager.put("OptionPane.yesButtonText", JournalHelper.getLanguage( getLocale(), "yes") );
-		UIManager.put("OptionPane.noButtonText", JournalHelper.getLanguage( getLocale(), "no") );
-		UIManager.put("OptionPane.cancelButtonText", JournalHelper.getLanguage( getLocale(), "cancel") );
-		
-		setLayout( new BorderLayout() );
-		journalPanel = new JournalPanel( new Journal() );
-		add( journalPanel.getToolbar(), BorderLayout.NORTH );
-		add( journalPanel, BorderLayout.CENTER );
-		setJMenuBar( journalPanel.getJournalMenu() );
-	
-		if (Toolkit.getDefaultToolkit().getScreenSize().width <= 1280){
-			setSize( Toolkit.getDefaultToolkit().getScreenSize() );
-			setLocation(0,0);	
-		} else {
-			setSize( new Dimension(955,600) );
-			setLocationRelativeTo( null );
-		}
+    public TrainerApp() {
+        getRootPane().putClientProperty("Window.style", "small");
+        getRootPane().putClientProperty("apple.awt.brushMetalLook", Boolean.TRUE);
+        setLocale(JournalHelper.getDefaultLocale());
+        UIManager.put("OptionPane.yesButtonText", JournalHelper.getLanguage(getLocale(), "yes"));
+        UIManager.put("OptionPane.noButtonText", JournalHelper.getLanguage(getLocale(), "no"));
+        UIManager.put("OptionPane.cancelButtonText", JournalHelper.getLanguage(getLocale(), "cancel"));
 
-		registerForMacOSXEvents();
+        setLayout(new BorderLayout());
+        journalPanel = new JournalPanel(new Journal());
+        add(journalPanel.getToolbar(), BorderLayout.NORTH);
+        add(journalPanel, BorderLayout.CENTER);
+        setJMenuBar(journalPanel.getJournalMenu());
 
-		setDefaultCloseOperation( DO_NOTHING_ON_CLOSE );
-		addWindowListener(
-			new WindowAdapter(){						
-				public void windowClosing(WindowEvent evt){
-					quit();
-				}
-			}
-		);
-		
-	}
-	
-	public void localeChanged(Locale locale) {
-		setLocale( locale );
-		UIManager.put("OptionPane.yesButtonText", JournalHelper.getLanguage( getLocale(), "yes" ) );
-		UIManager.put("OptionPane.noButtonText", JournalHelper.getLanguage( getLocale(),  "no" ) );
-		UIManager.put("OptionPane.cancelButtonText", JournalHelper.getLanguage( getLocale(), "cancel" ) );
-		journalPanel.localeChanged(locale);
-	}
-	
-	public void about(){
-		journalPanel.about();
-	}
-	
-	public void quit() {
-		save();
-		System.exit(0);
-	}
-	
-	public void loadJournal( Journal journal ){
-		journal.removeLocaleListener( journalPanel );
-		journal.removeLocaleListener( this );
-		journal.removeJournalListener( this );
-		journal.removeJournalListener( journalPanel );
-		journal.addJournalListener( this );
-		journal.addJournalListener( journalPanel );
-		journalPanel.loadJournal( journal );
-		journal.fireJournalLoaded();
-		localeChanged( journal.getLocale() );
-		journal.addLocaleListener( this );
-		journal.addLocaleListener( journalPanel );
+        if (Toolkit.getDefaultToolkit().getScreenSize().width <= 1280) {
+            setSize(Toolkit.getDefaultToolkit().getScreenSize());
+            setLocation(0, 0);
+        } else {
+            setSize(new Dimension(955, 600));
+            setLocationRelativeTo(null);
+        }
+
+        registerForMacOSXEvents();
+
+        setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+        addWindowListener(
+                new WindowAdapter() {
+                    public void windowClosing(WindowEvent evt) {
+                        quit();
+                    }
+                }
+        );
+
+    }
+
+    public void localeChanged(Locale locale) {
+        setLocale(locale);
+        UIManager.put("OptionPane.yesButtonText", JournalHelper.getLanguage(getLocale(), "yes"));
+        UIManager.put("OptionPane.noButtonText", JournalHelper.getLanguage(getLocale(), "no"));
+        UIManager.put("OptionPane.cancelButtonText", JournalHelper.getLanguage(getLocale(), "cancel"));
+        journalPanel.localeChanged(locale);
+    }
+
+    public void about() {
+        journalPanel.about();
+    }
+
+    public void quit() {
+        save();
+        System.exit(0);
+    }
+
+    public void loadJournal(Journal journal) {
+        org.jdesktop.layout.GroupLayout gl;
+        journal.removeLocaleListener(journalPanel);
+        journal.removeLocaleListener(this);
+        journal.removeJournalListener(this);
+        journal.removeJournalListener(journalPanel);
+        journal.addJournalListener(this);
+        journal.addJournalListener(journalPanel);
+        journalPanel.loadJournal(journal);
+        journal.fireJournalLoaded();
+        localeChanged(journal.getLocale());
+        journal.addLocaleListener(this);
+        journal.addLocaleListener(journalPanel);
 //		journalPanel.checkForUpdate( true );
-	}
-	
-	public void save(){
+    }
+
+    public void save() {
 //		final JournalProgressDialog progress = new JournalProgressDialog( this, JournalHelper.getLanguage( getLocale(), "progress.saving" ) );
-		final JournalProgressDialog progress = new JournalProgressDialog( this, "" );
-        Thread t = new Thread( new Runnable() {
-			public void run() {
-				try {
-					
-					JournalManager manager = new JournalManager();
-					manager.addReadWriteListener( progress );
-					
-					manager.save( journalPanel.getJournal() );
-				} catch (Exception e) {
-					progress.setText( e.getMessage() );
-				} finally {
-					progress.closeDialog();
-					setVisible( true );
-				}
-			}
-		});
-        
+        final JournalProgressDialog progress = new JournalProgressDialog(this, "");
+        Thread t = new Thread(new Runnable() {
+            public void run() {
+                try {
+
+                    JournalManager manager = new JournalManager();
+                    manager.addReadWriteListener(progress);
+
+                    manager.save(journalPanel.getJournal());
+                } catch (Exception e) {
+                    progress.setText(e.getMessage());
+                } finally {
+                    progress.closeDialog();
+                    setVisible(true);
+                }
+            }
+        });
+
         t.start();
         progress.showDialog();
-	}
-	
-	public void load( final File file ){
+    }
+
+    public void load(final File file) {
 //		final JournalProgressDialog progress = new JournalProgressDialog( this, JournalHelper.getLanguage( getLocale(), "progress.loading" ) );
-		final JournalProgressDialog progress = new JournalProgressDialog( this, "" );
-        Thread t = new Thread( new Runnable() {
-			public void run() {
-				try {
-					
-					JournalManager manager = new JournalManager();
-					manager.addReadWriteListener( progress );
-					if (!file.exists()){
-						manager.createEmpty();
-					}
-					Journal j = manager.read( new FileInputStream( file ) );
-					loadJournal( j );
-				} catch (Exception e) {
-					e.printStackTrace();
-				} finally {
-					progress.closeDialog();
-					setVisible( true );
-				}
-			}
-		});
-        
-		t.start();
-		progress.showDialog();
-	}
+        final JournalProgressDialog progress = new JournalProgressDialog(this, "");
+        Thread t = new Thread(new Runnable() {
+            public void run() {
+                try {
 
-	public void preferences() {
-		journalPanel.preferences();
-	}
-	
-	public void setOwnerText(Journal journal){
-		setTitle( JournalHelper.getLanguage( journal.getLocale(), "journal.ownertext", journal.getOwner() ) ); 
-	}
+                    JournalManager manager = new JournalManager();
+                    manager.addReadWriteListener(progress);
+                    if (!file.exists()) {
+                        manager.createEmpty();
+                    }
+                    Journal j = manager.read(new FileInputStream(file));
+                    loadJournal(j);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                } finally {
+                    progress.closeDialog();
+                    setVisible(true);
+                }
+            }
+        });
 
-	public void journalChanged(Journal journal) {
-		setOwnerText(journal);
-	}
+        t.start();
+        progress.showDialog();
+    }
 
-	public void ownerChanged(Journal journal) {
-		setOwnerText(journal);
-	}
+    public void preferences() {
+        journalPanel.preferences();
+    }
 
-	public void journalLoaded(Journal journal) {
-		setOwnerText(journal);
-	}
-	
-	/**
-	 * Loads a file from finder
-	 * 
-	 * @param file
-	 */
-	public void loadFile( String file ){		
-	}
+    public void setOwnerText(Journal journal) {
+        setTitle(JournalHelper.getLanguage(journal.getLocale(), "journal.ownertext", journal.getOwner()));
+    }
 
-	/**
-	 * Generic registration with the Mac OS X application menu 
-	 * Checks the platform, then attempts to register with the Apple EAWT
-	 * See OSXAdapter.java to see how this is done without directly referencing any Apple APIs
-	 */
+    public void journalChanged(Journal journal) {
+        setOwnerText(journal);
+    }
+
+    public void ownerChanged(Journal journal) {
+        setOwnerText(journal);
+    }
+
+    public void journalLoaded(Journal journal) {
+        setOwnerText(journal);
+    }
+
+    /**
+     * Loads a file from finder
+     *
+     * @param file
+     */
+    public void loadFile(String file) {
+    }
+
+    /**
+     * Generic registration with the Mac OS X application menu Checks the
+     * platform, then attempts to register with the Apple EAWT See
+     * OSXAdapter.java to see how this is done without directly referencing any
+     * Apple APIs
+     */
     public void registerForMacOSXEvents() {
         if (CrossPlatformUtilities.isMacOSX()) {
             try {
                 // Generate and register the OSXAdapter, passing it a hash of all the methods we wish to
                 // use as delegates for various com.apple.eawt.ApplicationListener methods
-                OSXAdapter.setQuitHandler(this, getClass().getDeclaredMethod("quit", (Class[])null));
-                OSXAdapter.setAboutHandler(this, getClass().getDeclaredMethod("about", (Class[])null));
-                OSXAdapter.setPreferencesHandler(this, getClass().getDeclaredMethod("preferences", (Class[])null));
-                OSXAdapter.setFileHandler(this, getClass().getDeclaredMethod("loadFile", new Class[] { String.class }));
+                OSXAdapter.setQuitHandler(this, getClass().getDeclaredMethod("quit", (Class[]) null));
+                OSXAdapter.setAboutHandler(this, getClass().getDeclaredMethod("about", (Class[]) null));
+                OSXAdapter.setPreferencesHandler(this, getClass().getDeclaredMethod("preferences", (Class[]) null));
+                OSXAdapter.setFileHandler(this, getClass().getDeclaredMethod("loadFile", new Class[]{String.class}));
             } catch (Exception e) {
                 System.err.println("Error while loading the OSXAdapter:");
                 e.printStackTrace();
@@ -349,20 +318,20 @@ public class TrainerApp extends JFrame implements OSXApplication, JournalListene
         }
     }
 
-	/**
-	 * 
-	 * 
-	 * @param args
-	 * @throws Exception
-	 */
-	public static void main( String [] args ) throws Exception {
-		javax.swing.SwingUtilities.invokeLater(new Runnable() {
-			public void run() {
-				CrossPlatformUtilities.setCrossPlatformProperties();
-				TrainerApp app = new TrainerApp();
-				app.load(JournalManager.getJournalFile());
-			}
-		});
-	}
-    
+    /**
+     *
+     *
+     * @param args
+     * @throws Exception
+     */
+    public static void main(String[] args) throws Exception {
+        javax.swing.SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                CrossPlatformUtilities.setCrossPlatformProperties();
+                TrainerApp app = new TrainerApp();
+                app.load(JournalManager.getJournalFile());
+            }
+        });
+    }
+
 }
